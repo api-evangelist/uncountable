@@ -1,0 +1,41 @@
+generated: '2026-09-01'
+method: searched
+source: >-
+  registry.npmjs.org search, pypi.org, api.github.com/orgs/uncountable,
+  https://www.support.uncountable.com/knowledge-base/
+note: >-
+  Uncountable ships no first-party client libraries that could be found in any public package
+  registry, and operates no public GitHub organization. Every registry below was queried
+  unauthenticated and answered. This matters for the API's readiness rather than for the
+  platform's: an integrator building against the External API writes their own HTTP client, and
+  there is no dated first-party release to read as a maintenance signal in either direction.
+  Recorded as a measured absence — no SDKs pointer is emitted, because none exists.
+package_count: 0
+official_package_count: 0
+packages: []
+registry_probes:
+- registry: npm
+  query: uncountable
+  endpoint: https://registry.npmjs.org/-/v1/search?text=uncountable
+  status: 200
+  first_party_matches: 0
+  note: all 17 results are unrelated pluralization/inflection libraries
+- registry: pypi
+  candidates:
+  - name: uncountable
+    status: 404
+  - name: uncountable-api
+    status: 404
+  - name: uncountable-sdk
+    status: 404
+  - name: uncountable-client
+    status: 404
+- registry: github
+  endpoint: https://api.github.com/orgs/uncountable
+  status: 404
+  note: no public GitHub organization under this name
+distribution:
+  documented_clients: >-
+    Uncountable documents integration through the OAuth-protected External API, its hosted MCP
+    server, SFTP file transfer (with Cyberduck documented for manual transfers), and
+    instrument/ERP connectors — but no packaged SDK in any language.

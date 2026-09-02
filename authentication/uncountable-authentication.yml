@@ -1,0 +1,83 @@
+generated: '2026-09-01'
+method: probed
+source: >-
+  https://app.uncountable.com/.well-known/openid-configuration (HTTP 200) +
+  https://www.support.uncountable.com/knowledge-base/api-access-and-permissions-in-uncountable/
+docs: https://www.support.uncountable.com/knowledge-base/api-access-and-permissions-in-uncountable/
+note: >-
+  Uncountable publishes no public OpenAPI, so this profile is not derived from
+  securitySchemes. It is read from the live OAuth 2.0 / OpenID Connect discovery
+  document served anonymously at each application host, plus the public knowledgebase
+  article on API access and permissions.
+schemes:
+- key: oauth2
+  type: oauth2
+  preferred: true
+  description: >-
+    OAuth 2.0 authorization code with PKCE, recommended by Uncountable for integrations
+    and third-party tools. Advertised by the discovery document on both the US and EU
+    application hosts.
+  flows:
+    authorization_code:
+      authorization_url: https://app.uncountable.com/oauth2/authorize
+      token_url: https://app.uncountable.com/oauth2/token
+      refresh_supported: true
+      pkce_methods:
+      - S256
+      scopes:
+        EXTERNAL_API_READ: read access to the External API
+        EXTERNAL_API_WRITE: write access to the External API
+        CAD: CAD-related access
+  token_endpoint_auth_methods:
+  - none
+  id_token_signing_alg:
+  - RS256
+  jwks_uri: https://app.uncountable.com/.well-known/jwks.json
+  issuer: https://app.uncountable.com
+- key: basic
+  type: http
+  scheme: basic
+  preferred: false
+  description: >-
+    Basic authentication, documented for "simpler or legacy use cases". Requests may be
+    made as a personal API key tied to an individual user account, or as a robot user
+    (service account) for integrations and automated tasks.
+  source: https://www.support.uncountable.com/knowledge-base/api-access-and-permissions-in-uncountable/
+regions:
+- region: us
+  issuer: https://app.uncountable.com
+  discovery: https://app.uncountable.com/.well-known/openid-configuration
+  http_status: 200
+- region: eu
+  issuer: https://appeu.uncountable.com
+  discovery: https://appeu.uncountable.com/.well-known/openid-configuration
+  http_status: 200
+client_registration:
+  dynamic: false
+  dynamic_probe:
+    url: https://app.uncountable.com/oauth2/register
+    method: POST
+    http_status: 302
+    note: redirects to /signin — RFC 7591 dynamic client registration is not offered anonymously
+  manual: >-
+    An administrator creates the OAuth client in Uncountable under
+    User Administration -> OAuth. Clients are scoped to a single schema/account.
+  client_id_metadata_document_supported: true
+authorization_model:
+  model: rbac
+  description: >-
+    Role-based access control is enforced identically across the web UI and the API, at
+    project, experiment and dataset level. API responses are filtered server-side to the
+    caller's permissions, so no client-side filtering is required.
+  unauthorized_status: 403
+  audit_logged: true
+sso:
+  saml2: true
+  scim: true
+  mfa: true
+  ip_allowlisting: true
+  source: https://www.uncountable.com/uncountable-security
+  note: >-
+    SAML v2 SSO, SCIM automated provisioning, MFA and IP allowlisting are stated on the
+    company security page. These govern platform/user sign-in, not the External API
+    token flow.

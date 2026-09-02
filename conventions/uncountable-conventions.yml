@@ -1,0 +1,123 @@
+generated: '2026-09-01'
+method: searched
+source: >-
+  https://www.support.uncountable.com/knowledge-base/external-api-list_entities/,
+  https://www.support.uncountable.com/knowledge-base/api-access-and-permissions-in-uncountable/,
+  https://app.uncountable.com/.well-known/openid-configuration
+note: >-
+  Uncountable's full API reference sits behind the application sign-in at
+  https://app.uncountable.com/docs, so this document records only the cross-cutting
+  semantics that are stated on public pages or observable on live anonymous responses.
+  Where a convention could not be established publicly it is recorded as unknown rather
+  than guessed.
+auth:
+  style: oauth2-bearer
+  detail: >-
+    OAuth 2.0 authorization code with PKCE (S256), Bearer token on the request. Basic
+    authentication is documented as an alternative for simpler or legacy use cases, using
+    a personal API key or a robot (service) user.
+  scopes:
+  - EXTERNAL_API_READ
+  - EXTERNAL_API_WRITE
+  - CAD
+  cross_ref: authentication/uncountable-authentication.yml
+request_style:
+  transport: https
+  shape: >-
+    JSON request body wrapped in a top-level `data` object. The one publicly documented
+    operation, external_list_entities, is a POST-shaped call carrying `entityType`,
+    `configReference`, and optional `limit`, `offset` and `attributes`.
+  path_example: /api/external/entity/external_list_entities
+pagination:
+  style: limit-offset
+  params:
+    limit: maximum rows to return, capped at 100
+    offset: starting row index
+  max_page_size: 100
+  cursor: false
+  response_fields: >-
+    Column definitions and row values mirroring the Listing Configuration table defined in
+    the UI, in a consistent, ordered structure. Exact envelope field names are not published.
+  docs: https://www.support.uncountable.com/knowledge-base/external-api-list_entities/
+  note: >-
+    A dedicated "Pagination of APIs" guide is referenced from the public article but lives
+    behind the app sign-in.
+filtering:
+  mechanism: server-side listing configuration
+  detail: >-
+    Uncountable's distinctive convention: callers do not query entities directly. An
+    administrator defines a Listing Configuration in the UI — base dataset, columns,
+    filters — and the API call references it by `configReference`. Per-request filtering is
+    limited to the `attributes` object supplying values for attribute-based filters the
+    configuration already declares. The consequence for an integrator is that the query
+    shape is governed in the product, not in the client.
+field_expansion:
+  supported: unknown
+  note: not documented publicly; column selection is a property of the Listing Configuration
+metadata:
+  supported: unknown
+request_id_tracing:
+  supported: unknown
+  note: no request-id or correlation-id header documented, and none observed on the anonymous 401 responses
+versioning:
+  scheme: unknown
+  in_path: false
+  note: >-
+    The documented path /api/external/entity/external_list_entities carries no version
+    segment, and no versioning or API-version-header policy is published.
+  cross_ref: lifecycle/uncountable-lifecycle.yml
+error_envelope:
+  format: unknown
+  rfc9457: false
+  observed:
+  - status: 401
+    body: unauthorized
+    content_type: text/plain
+    surface: https://app.uncountable.com/mcp
+    header: 'WWW-Authenticate: Bearer error="invalid_token", scope="EXTERNAL_API_READ EXTERNAL_API_WRITE"'
+  documented:
+  - status: 403
+    meaning: caller lacks permission for the requested project, experiment or dataset
+    source: https://www.support.uncountable.com/knowledge-base/api-access-and-permissions-in-uncountable/
+  cross_ref: errors/uncountable-problem-types.yml
+rate_limit_signaling:
+  headers: unknown
+  documented: false
+  note: >-
+    Rate limits are mentioned as existing in the public list_entities article but neither the
+    numbers nor the response headers are published; that detail sits behind the app sign-in.
+  cross_ref: rate-limits/uncountable-rate-limits.yml
+idempotency:
+  supported: unknown
+  status: undocumented
+  header: null
+  note: >-
+    No idempotency key, request-replay guarantee or retry-safety statement appears anywhere in
+    Uncountable's public documentation. Not asserted as absent — asserted as unpublished. A
+    write scope exists (EXTERNAL_API_WRITE), so the question is live for any agent that acts
+    through this API.
+dry_run_mode:
+  supported: unknown
+  status: undocumented
+reversibility:
+  status: undocumented
+  grade: null
+  write_surface: true
+  write_surface_evidence: >-
+    The authorization server declares an EXTERNAL_API_WRITE scope and the /mcp WWW-Authenticate
+    challenge requires it, so a write surface demonstrably exists.
+  reversal_operations: []
+  windows: []
+  note: >-
+    This is not `na`. Uncountable's platform plainly supports writes — an EXTERNAL_API_WRITE
+    scope is declared by the live authorization server, the MCP server requests it, and the
+    knowledgebase documents entity creation and recipe editing through Bodie AI tools. But the
+    only publicly documented External API operation is a read (external_list_entities), and the
+    write operations, together with any cancel/undo/restore path and any window in which one
+    works, are documented only behind the application sign-in at https://app.uncountable.com/docs.
+    No reversal operation and no window are stated on any public page, so none is recorded here.
+    Inventing a window would be the one error in this pipeline that could cost a user real data:
+    an agent told it can restore a deleted entity within 30 days, when no such guarantee is
+    published, would act on a promise nobody made. The honest reading for an integrator is that
+    reversibility must be established from the gated reference or from Uncountable directly
+    before any agent is given write scope.

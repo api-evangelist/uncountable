@@ -1,0 +1,58 @@
+generated: '2026-09-01'
+method: searched
+source: >-
+  https://www.support.uncountable.com/article-categories/platform-updates/,
+  https://www.uncountable.com/product-news,
+  https://www.uncountable.com/uncountable-security
+note: >-
+  Uncountable ships platform updates on a monthly cadence and documents them as
+  knowledgebase articles, but publishes no API versioning policy, no deprecation policy,
+  no Sunset/Deprecation header commitment and no public status page. The marketing site's
+  /product-news page exists (HTTP 200) but currently renders "No items found", so the
+  knowledgebase category is the live surface.
+versioning:
+  scheme: unpublished
+  in_path: false
+  detail: >-
+    The one documented External API path, /api/external/entity/external_list_entities, carries
+    no version segment. No version header, no dated version scheme and no compatibility policy
+    is published.
+deprecation_policy:
+  published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    No deprecation policy, notice period or RFC 8594 Sunset/Deprecation header commitment was
+    found on any public Uncountable page. Deliberately recorded as absent rather than omitted.
+status_page:
+  published: false
+  url: null
+  probes:
+  - url: https://status.uncountable.com/
+    status: 0
+    note: DNS does not resolve
+  - url: https://uncountable.statuspage.io/
+    status: 200
+    note: >-
+      Resolves to Atlassian's generic Statuspage marketing site, not an Uncountable status
+      page — the page title is "Real-Time Incident Communication with Statuspage | Atlassian".
+      Rejected; this is the classic false positive on a <vendor>.statuspage.io guess.
+sla:
+  published: false
+  note: >-
+    Availability commitments are referenced in sales material but no public SLA document was
+    found. ISO 22301:2019 business-continuity certification (certificate BCMS-UN-111125) is
+    published on the security page.
+release_cadence:
+  cadence: monthly
+  surface: https://www.support.uncountable.com/article-categories/platform-updates/
+  cross_ref: changelog/uncountable-changelog.yml
+regions:
+- region: us
+  host: app.uncountable.com
+- region: eu
+  host: appeu.uncountable.com
+- region: jp
+  host: null
+  note: Japan hosting is stated on the security page; no public hostname was found.

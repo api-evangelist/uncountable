@@ -1,0 +1,24 @@
+generated: '2026-09-01'
+method: searched
+source: https://www.uncountable.com/
+note: >-
+  Uncountable publishes no pricing. There is no /pricing page (HTTP 404), no plan tiers, no
+  published quotas and no self-serve sign-up — the only commercial path on the site is a
+  "Book a Demo" form. This is the expected posture for an enterprise laboratory-informatics
+  platform sold to global R&D organisations, and it is recorded as a measured zero rather than
+  omitted: a buyer or an agent evaluating this API cannot obtain a price, a quota or a contract
+  term without contacting sales.
+model: enterprise-contact-sales
+self_serve: false
+free_tier: false
+trial: false
+plan_count: 0
+plans: []
+contact:
+  demo: https://www.uncountable.com/schedule-free-demo
+  contact: https://www.uncountable.com/contact-us
+probes:
+- url: https://www.uncountable.com/pricing
+  status: 404
+- url: https://www.uncountable.com/schedule-free-demo
+  status: 200

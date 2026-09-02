@@ -1,0 +1,183 @@
+generated: '2026-09-01'
+method: probed
+source: >-
+  https://app.uncountable.com/.well-known/openid-configuration (200),
+  https://app.uncountable.com/mcp (401 Bearer challenge),
+  https://www.uncountable.com/uncountable-security (200),
+  https://www.support.uncountable.com/knowledge-base/uncountable-mcp-setup-guide/ (200)
+note: >-
+  Every `conforms: true` row below is anchored to something machine-observable — a field
+  in the live discovery document, or a header on a live response — except the compliance
+  and regulatory rows, which are prose claims on the company security page and are
+  labelled as such. Rows with `conforms: false` are recorded because they were probed and
+  missed, not because they were assumed.
+standards:
+- id: oauth2
+  name: OAuth 2.0
+  conforms: true
+  evidence: >-
+    Discovery document at https://app.uncountable.com/.well-known/oauth-authorization-server
+    (HTTP 200) declares authorization_endpoint, token_endpoint, response_types_supported
+    ["code"], grant_types_supported ["authorization_code","refresh_token"].
+- id: oidc
+  name: OpenID Connect Discovery 1.0
+  conforms: true
+  evidence: >-
+    https://app.uncountable.com/.well-known/openid-configuration (HTTP 200) with issuer,
+    jwks_uri, subject_types_supported ["public"], id_token_signing_alg_values_supported
+    ["RS256"].
+- id: rfc7636-pkce
+  name: 'RFC 7636: PKCE'
+  conforms: true
+  evidence: code_challenge_methods_supported ["S256"] in the discovery document.
+- id: rfc8414-as-metadata
+  name: 'RFC 8414: OAuth 2.0 Authorization Server Metadata'
+  conforms: true
+  evidence: >-
+    /.well-known/oauth-authorization-server served at HTTP 200 on both the US and EU
+    application hosts.
+- id: rfc7517-jwks
+  name: 'RFC 7517: JSON Web Key Set'
+  conforms: true
+  evidence: >-
+    https://app.uncountable.com/.well-known/jwks.json (HTTP 200) returns a keys[] array
+    with an RS256 signing key.
+- id: rfc6750-bearer
+  name: 'RFC 6750: Bearer Token Usage'
+  conforms: true
+  evidence: >-
+    https://app.uncountable.com/mcp returns HTTP 401 with
+    WWW-Authenticate: Bearer error="invalid_token", scope="EXTERNAL_API_READ EXTERNAL_API_WRITE".
+- id: oauth-client-id-metadata-document
+  name: OAuth Client ID Metadata Document (CIMD)
+  conforms: true
+  evidence: >-
+    client_id_metadata_document_supported: true in the discovery document, corroborated by
+    the MCP setup guide documenting the Claude CIMD client id
+    https://claude.ai/oauth/mcp-oauth-client-metadata as an alternative to registering a client.
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  evidence: >-
+    First-party hosted MCP endpoint at /mcp on every environment, documented for Claude.ai,
+    ChatGPT and Copilot Studio. Live probe returns the OAuth challenge rather than a 404,
+    confirming the route exists. tools/list is auth-gated so protocol version could not be
+    read anonymously.
+- id: rfc9728-protected-resource-metadata
+  name: 'RFC 9728: OAuth 2.0 Protected Resource Metadata'
+  conforms: false
+  evidence: >-
+    https://app.uncountable.com/.well-known/oauth-protected-resource returns 302 to /signin.
+    The MCP 401 challenge also omits a resource_metadata parameter, so an MCP client cannot
+    discover the authorization server from the resource alone.
+- id: rfc7591-dynamic-client-registration
+  name: 'RFC 7591: OAuth 2.0 Dynamic Client Registration'
+  conforms: false
+  evidence: >-
+    POST https://app.uncountable.com/oauth2/register returns 302 to /signin; the discovery
+    document declares no registration_endpoint. Clients are created manually by an
+    administrator under User Administration -> OAuth.
+- id: rfc9116-security-txt
+  name: 'RFC 9116: security.txt'
+  conforms: false
+  evidence: >-
+    /.well-known/security.txt returns 404 on www.uncountable.com, 302 on app.uncountable.com
+    and 301 on www.support.uncountable.com. A security contact (security@uncountable.com) is
+    published in prose instead.
+- id: rfc9457-problem-details
+  name: 'RFC 9457: Problem Details for HTTP APIs'
+  conforms: false
+  evidence: >-
+    No public error reference and no problem+json content type observed. The one publicly
+    documented failure mode is a bare 403 Forbidden for insufficient permissions; the /mcp
+    401 returns the plain text body "unauthorized".
+- id: openapi
+  name: OpenAPI
+  conforms: false
+  evidence: >-
+    No public OpenAPI. /openapi.json, /openapi.yaml, /swagger.json, /v1/openapi.json,
+    /api-docs and /redoc all 404 on www.uncountable.com and 302 to /signin on
+    app.uncountable.com and appeu.uncountable.com. The reference at /docs is behind the
+    application sign-in.
+- id: scim
+  name: 'SCIM 2.0 (RFC 7643/7644)'
+  conforms: true
+  claim_only: true
+  evidence: >-
+    "SCIM automated provisioning" is stated on https://www.uncountable.com/uncountable-security.
+    No SCIM base URL, /Schemas endpoint or urn:ietf:params:scim:schemas URN is published, so
+    this is a prose claim, not an observed contract.
+- id: saml2
+  name: SAML 2.0
+  conforms: true
+  claim_only: true
+  evidence: >-
+    "SAML v2 single sign-on" stated on https://www.uncountable.com/uncountable-security.
+    No metadata document was found at a public URL.
+- id: pagination
+  name: Offset/limit pagination
+  conforms: true
+  evidence: >-
+    The list_entities article documents `limit` (max 100) and `offset` on the request body,
+    with a companion "Pagination of APIs" guide behind the app sign-in.
+    https://www.support.uncountable.com/knowledge-base/external-api-list_entities/
+- id: idempotency
+  name: Idempotency keys
+  conforms: false
+  evidence: >-
+    No idempotency key header, request-replay semantics or retry-safety statement appears in
+    any public Uncountable documentation, and the External API reference is gated.
+compliance:
+- id: soc2-type-ii
+  name: SOC 2 Type II
+  conforms: true
+  claim_only: true
+  evidence: https://www.uncountable.com/uncountable-security
+- id: iso-27001
+  name: ISO/IEC 27001
+  conforms: true
+  claim_only: true
+  evidence: https://www.uncountable.com/uncountable-security
+- id: iso-22301
+  name: ISO 22301:2019
+  conforms: true
+  claim_only: true
+  evidence: >-
+    Certificate BCMS-UN-111125, issued by A-LIGN, ANAB-accredited, valid to November 2028 —
+    stated on https://www.uncountable.com/uncountable-security.
+- id: gdpr
+  name: GDPR
+  conforms: true
+  claim_only: true
+  evidence: https://www.uncountable.com/uncountable-security
+- id: 21-cfr-part-11
+  name: 21 CFR Part 11
+  conforms: true
+  claim_only: true
+  evidence: >-
+    Electronic signature and audit trail capabilities stated as aligned on
+    https://www.uncountable.com/uncountable-security.
+- id: eu-gmp-annex-11
+  name: EU GMP Annex 11
+  conforms: true
+  claim_only: true
+  evidence: https://www.uncountable.com/uncountable-security
+domain_standard:
+  found: false
+  market: laboratory informatics / R&D data management
+  note: >-
+    No laboratory-informatics interchange standard is declared anywhere in Uncountable's
+    public surface. The candidates for this market were checked by name against the
+    knowledgebase, the llms.txt product map and the security page and none appears:
+    SiLA 2, AnIML, Allotrope Data Format (ADF) / Allotrope Simple Model, ASTM E1578,
+    OPC UA, SDF and HL7 v2/FHIR. The nearest regulatory shapes Uncountable does claim —
+    21 CFR Part 11, EU GMP Annex 11 and ISO/IEC 17025 — are compliance regimes asserted in
+    prose on a marketing page, not message or schema standards observable in a contract,
+    and the External API contract itself is not published. Recorded as not found rather
+    than inferred; this dimension is reward-only and Uncountable is not penalised for it.
+  candidates_probed:
+  - SiLA 2
+  - AnIML
+  - Allotrope Data Format
+  - ASTM E1578
+  - OPC UA

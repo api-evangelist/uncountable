@@ -1,23 +1,141 @@
 aid: uncountable
 name: Uncountable
-description: 'Uncountable is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Uncountable is a unified laboratory informatics and R&D data platform for
+  enterprise research organizations, replacing disconnected LIMS, ELN, QMS and PLM tools
+  with a single cloud system that centralizes experimental data, accelerates formulation
+  work, and supports AI-driven discovery across chemicals, advanced materials, batteries,
+  plastics, coatings, food and life sciences. The platform is delivered as a multi-region
+  SaaS application (US and EU deployments) and exposes an authenticated External API
+  plus a hosted, OAuth-protected Model Context Protocol (MCP) server so agents and
+  integration tooling can read platform data, alongside SFTP and instrument/ERP connectors.'
+image: https://cdn.prod.website-files.com/5dd1e506c5a7edfbd95f37e2/64138d793d519dafccc6295f_opengraph.png
 url: https://raw.githubusercontent.com/api-evangelist/uncountable/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-09-01'
 modified: '2026-09-01'
 tags:
 - Company
-apis: []
+- Laboratory Informatics
+- LIMS
+- Electronic Lab Notebook
+- R&D Data Management
+- Product Lifecycle Management
+- Quality Management
+- Materials Science
+- Chemicals
+- Artificial Intelligence
+- Model Context Protocol
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: uncountable-external-api
+  name: Uncountable External API
+  description: 'The Uncountable External API is the authenticated REST surface of the
+    Uncountable R&D platform. Its documented entry point is the list_entities endpoint,
+    which returns rows from a Listing Configuration defined in the Uncountable UI rather
+    than querying entities directly. It is protected by OAuth 2.0 (authorization code
+    with PKCE) using the EXTERNAL_API_READ and EXTERNAL_API_WRITE scopes, or by basic
+    authentication for legacy use, and enforces the same role-based permissions as the
+    web application. Full endpoint and parameter reference is published behind the
+    application sign-in at /docs.'
+  humanURL: https://app.uncountable.com/docs
+  baseURL: https://app.uncountable.com/api/external
+  tags:
+  - R&D Data
+  - Laboratory Informatics
+  - Listing Configuration
+  properties:
+  - type: Authentication
+    url: authentication/uncountable-authentication.yml
+  - type: OAuthScopes
+    url: scopes/uncountable-scopes.yml
+  - type: Conventions
+    url: conventions/uncountable-conventions.yml
+  - type: ErrorCatalog
+    url: errors/uncountable-problem-types.yml
+- aid: uncountable-mcp
+  name: Uncountable MCP Server
+  description: 'Uncountable ships a first-party hosted Model Context Protocol server at
+    the /mcp path of each customer environment (https://app.uncountable.com/mcp for the
+    US deployment, https://appeu.uncountable.com/mcp for the EU deployment). It is a
+    remote MCP endpoint — no local install — protected by OAuth 2.0 with the
+    EXTERNAL_API_READ and EXTERNAL_API_WRITE scopes, and documented for Claude.ai,
+    ChatGPT and Microsoft Copilot Studio. Access through the server is limited to what
+    the authenticating user can already see in that schema.'
+  humanURL: https://www.support.uncountable.com/knowledge-base/uncountable-mcp-setup-guide/
+  baseURL: https://app.uncountable.com/mcp
+  tags:
+  - Model Context Protocol
+  - Agents
+  properties:
+  - type: MCPServer
+    url: mcp/uncountable-mcp.yml
 common:
 - type: Website
-  url: https://forgeglobal.com/uncountable_stock/
+  url: https://www.uncountable.com/
+- type: Documentation
+  url: https://www.support.uncountable.com/knowledge-base/
+- type: APIReference
+  url: https://app.uncountable.com/docs
+- type: Support
+  url: https://www.support.uncountable.com/
+- type: Blog
+  url: https://www.uncountable.com/blog
+- type: GettingStarted
+  url: https://www.support.uncountable.com/article-categories/getting-started/
+- type: ChangeLog
+  url: changelog/uncountable-changelog.yml
+- type: Login
+  url: https://app.uncountable.com/signin
+- type: TermsOfService
+  url: https://www.uncountable.com/terms-of-use
+- type: PrivacyPolicy
+  url: https://www.uncountable.com/privacy
+- type: Security
+  url: https://www.uncountable.com/uncountable-security
+- type: Compliance
+  url: https://www.uncountable.com/uncountable-security
+- type: MCPServer
+  url: mcp/uncountable-mcp.yml
+- type: Authentication
+  url: authentication/uncountable-authentication.yml
+- type: OAuthScopes
+  url: scopes/uncountable-scopes.yml
+- type: WellKnown
+  url: well-known/uncountable-well-known.yml
+- type: LLMsTxt
+  url: llms/uncountable-llms.txt
+- type: Conventions
+  url: conventions/uncountable-conventions.yml
+- type: ErrorCatalog
+  url: errors/uncountable-problem-types.yml
+- type: Conformance
+  url: conformance/uncountable-conformance.yml
+- type: DomainSecurity
+  url: security/uncountable-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/uncountable-vulnerability-disclosure.yml
+- type: TrustCenter
+  url: security/uncountable-trust-center.yml
+- type: Lifecycle
+  url: lifecycle/uncountable-lifecycle.yml
+- type: RateLimits
+  url: rate-limits/uncountable-rate-limits.yml
+- type: Plans
+  url: plans/uncountable-plans-pricing.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DataModel
+  url: data-model/uncountable-data-model.yml
+- type: Packages
+  url: packages/uncountable-packages.yml
+x-enrichment:
+  date: '2026-09-01'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v1

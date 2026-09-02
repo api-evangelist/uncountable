@@ -1,0 +1,36 @@
+generated: '2026-09-01'
+method: probed
+source: https://app.uncountable.com/.well-known/openid-configuration
+docs: https://www.support.uncountable.com/knowledge-base/uncountable-mcp-setup-guide/
+note: >-
+  Scopes are read verbatim from the scopes_supported array of the live OAuth 2.0 /
+  OpenID Connect discovery documents on both the US and EU application hosts (identical
+  on both). Uncountable publishes no scope reference page, so the descriptions below are
+  the plain reading of the scope names plus the one corroborating public signal: the
+  /mcp endpoint's WWW-Authenticate challenge names EXTERNAL_API_READ and
+  EXTERNAL_API_WRITE as the scopes it requires. No per-endpoint scope mapping is
+  published; that reference sits behind the application sign-in at /docs.
+authorization_server: https://app.uncountable.com
+authorization_endpoint: https://app.uncountable.com/oauth2/authorize
+token_endpoint: https://app.uncountable.com/oauth2/token
+flows:
+- authorization_code
+- refresh_token
+pkce: S256
+scope_count: 3
+scopes:
+- name: EXTERNAL_API_READ
+  description: Read access to the Uncountable External API and the hosted MCP server.
+  evidence: >-
+    scopes_supported in the discovery document; also named in the WWW-Authenticate
+    Bearer challenge returned by https://app.uncountable.com/mcp (HTTP 401).
+- name: EXTERNAL_API_WRITE
+  description: Write access to the Uncountable External API and the hosted MCP server.
+  evidence: >-
+    scopes_supported in the discovery document; also named in the WWW-Authenticate
+    Bearer challenge returned by https://app.uncountable.com/mcp (HTTP 401).
+- name: CAD
+  description: >-
+    CAD-related access. Uncountable publishes no description of this scope; it is
+    recorded here because it is declared by the authorization server.
+  evidence: scopes_supported in the discovery document.

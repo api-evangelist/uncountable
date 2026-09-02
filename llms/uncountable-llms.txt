@@ -1,0 +1,45 @@
+# Uncountable
+
+> Uncountable is a unified laboratory informatics platform for R&D organizations. It replaces disconnected LIMS, ELN, and data tools with a single cloud-based system that centralizes experimental data, accelerates formulation, and enables AI-driven discovery.
+
+## Products
+
+- [Unified R&D Platform](https://uncountable.com/cloud-platform): End-to-end platform connecting R&D, QC, and PLM data for faster innovation.
+- [LIMS](https://uncountable.com/products/integrated-laboratory-information-management-system-lims): Integrated laboratory information management system for enterprise R&D.
+- [ELN](https://uncountable.com/products/integrated-electronic-laboratory-notebook-eln): Electronic laboratory notebook with structured data capture and visualization.
+- [Quality Management System](https://uncountable.com/products/quality-management-system): QMS for R&D and manufacturing compliance.
+- [Product Lifecycle Management](https://uncountable.com/products/product-lifecycle-management-for-enterprises): PLM for enterprise formulation and product development.
+- [QC LIMS](https://uncountable.com/products/integrated-qc-lims-for-enterprises): Integrated quality control LIMS for enterprise labs.
+- [Visualizations & Reporting](https://uncountable.com/products/integrated-visualizations-reporting): Advanced data visualization and reporting for R&D insights.
+
+## Industries
+
+- [Chemicals](https://uncountable.com/industries/chemicals)
+- [Advanced Materials](https://uncountable.com/industries/advanced-materials)
+- [Batteries](https://uncountable.com/industries/batteries)
+- [Plastics and Compounds](https://uncountable.com/industries/plastics-and-compounds)
+- [Paints, Coatings and Adhesives](https://uncountable.com/industries/paints-coatings-and-adhesives)
+- [Food](https://uncountable.com/industries/food)
+- [Pharmaceuticals & Biotech](https://uncountable.com/industries/pharmaceuticals-biotech)
+- [Life Sciences](https://uncountable.com/platform-life-sciences)
+
+## Resources
+
+- [Blog](https://uncountable.com/blog): Insights on R&D digitalization, laboratory informatics, and AI in research.
+- [Case Studies](https://uncountable.com/case-studies): How R&D teams in chemicals, materials, food, and pharma use Uncountable.
+- [Customer Announcements](https://uncountable.com/customer-announcements): Partnership announcements and customer wins.
+- [Webinars](https://uncountable.com/webinars): On-demand webinars on R&D digitalization and lab informatics.
+- [Events](https://uncountable.com/events): Industry conferences and Uncountable-hosted events.
+- [Solution Guides](https://uncountable.com/solution-guides-and-tools): Practical guides for evaluating and implementing lab informatics.
+- [Product News](https://uncountable.com/product-news): Latest platform updates and feature releases.
+
+## Company
+
+- [About](https://uncountable.com/company): Mission, team, and company background.
+- [Careers](https://uncountable.com/careers): Open roles at Uncountable.
+- [Customers](https://uncountable.com/customers): Customer stories and testimonials.
+- [Security](https://uncountable.com/uncountable-security): Uncountable's security practices and certifications.
+- [Sustainability](https://uncountable.com/uncountables-sustainability): Environmental and sustainability commitments.
+- [Contact](https://uncountable.com/contact-us): Get in touch with the team.
+- [Values](https://uncountable.com/values): Company values and culture.
+- [Partner Network](https://uncountable.com/partner-network): Integration and solution partners.

@@ -1,0 +1,93 @@
+generated: '2026-09-01'
+method: probed
+source: live GET of the RFC 8615 well-known path list on every Uncountable host
+note: >-
+  Two of the five standard paths return real documents, and only on the application
+  hosts. The marketing host (www.uncountable.com) 404s every path; the WordPress
+  knowledgebase host 301s them. app.uncountable.com and appeu.uncountable.com — the
+  US and EU deployments of the platform — both serve a genuine OAuth 2.0 /
+  OpenID Connect discovery document declaring the External API scopes.
+hosts:
+- host: app.uncountable.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: uncountable-app-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: uncountable-app-oauth-authorization-server.json
+  - path: /.well-known/jwks.json
+    status: 200
+    file: null
+    note: JWKS served (RS256 signing key); not saved verbatim because key material rotates.
+  - path: /.well-known/security.txt
+    status: 302
+    file: null
+    note: redirects to /signin — not a served security.txt
+  - path: /.well-known/oauth-protected-resource
+    status: 302
+    file: null
+    note: redirects to /signin — RFC 9728 resource metadata is not published
+  - path: /.well-known/api-catalog
+    status: 302
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 302
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 302
+    file: null
+  - path: /.well-known/agent.json
+    status: 302
+    file: null
+- host: appeu.uncountable.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: uncountable-appeu-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: uncountable-appeu-oauth-authorization-server.json
+  - path: /.well-known/jwks.json
+    status: 200
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 302
+    file: null
+  - path: /.well-known/agent.json
+    status: 302
+    file: null
+- host: www.uncountable.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+- host: www.support.uncountable.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 301
+    file: null
+  - path: /.well-known/api-catalog
+    status: 301
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 301
+    file: null

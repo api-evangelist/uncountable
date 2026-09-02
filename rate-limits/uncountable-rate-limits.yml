@@ -1,0 +1,27 @@
+generated: '2026-09-01'
+method: searched
+source: https://www.support.uncountable.com/knowledge-base/external-api-list_entities/
+note: >-
+  Uncountable states that rate limits exist and points readers at the gated reference at
+  https://app.uncountable.com/docs for the specifics, but publishes neither the numbers nor the
+  response headers on any page reachable without an account. No RateLimit-*, X-RateLimit-* or
+  Retry-After header was observed on the anonymous responses available to probe (the /mcp 401
+  and the /signin 302 carry none). The one hard published ceiling is a page-size cap, which is a
+  pagination limit rather than a request-rate limit, so it is recorded under pagination and not
+  counted as a rate limit here.
+limit_count: 0
+limits: []
+headers:
+  documented: []
+  observed: []
+  note: >-
+    No rate-limit signalling headers are documented or observable. An agent cannot learn its
+    remaining budget from a response, and cannot learn a backoff interval from a 429, because
+    neither is published.
+exhaustion_status: unknown
+page_size_cap:
+  value: 100
+  parameter: limit
+  scope: external_list_entities
+  source: https://www.support.uncountable.com/knowledge-base/external-api-list_entities/
+  note: pagination ceiling, not a rate limit

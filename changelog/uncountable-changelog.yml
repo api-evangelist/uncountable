@@ -1,0 +1,44 @@
+generated: '2026-09-01'
+method: searched
+source: https://www.support.uncountable.com/article-categories/platform-updates/
+note: >-
+  Uncountable's changelog is published as knowledgebase articles under the Platform Updates
+  category rather than as a versioned release feed. It mixes month-named roll-up articles
+  ("August 2026", "July 2026") with individually titled feature notes. The marketing site's
+  /product-news page returns HTTP 200 but renders "No items found", so it is not the changelog
+  despite the name. No semantic version numbers are attached to any entry.
+scheme: dated-monthly
+versioned: false
+current_version: null
+feed:
+  rss: https://www.support.uncountable.com/feed/
+  note: site-wide WordPress feed, not a changelog-specific feed
+entries:
+- title: August 2026
+  date: '2026-08'
+  type: roll-up
+  url: https://www.support.uncountable.com/knowledge-base/august-2026/
+- title: July 2026
+  date: '2026-07'
+  type: roll-up
+  url: https://www.support.uncountable.com/knowledge-base/july-2026/
+- title: Update to Project Dashboard Navigation Buttons
+  date: null
+  type: feature
+  breaking: false
+  url: https://www.support.uncountable.com/knowledge-base/update-to-project-dashboard-navigation-buttons/
+- title: 3D Scatter Charts in Explore Data
+  date: null
+  type: feature
+  breaking: false
+  url: https://www.support.uncountable.com/knowledge-base/3d-scatter-charts-in-explore-data/
+- title: Table Builder Redesign
+  date: null
+  type: feature
+  breaking: false
+  url: https://www.support.uncountable.com/knowledge-base/table-builder-redesign/
+api_changelog:
+  published: false
+  note: >-
+    None of the platform-update entries describe External API or MCP changes. There is no
+    API-specific changelog on any public surface.

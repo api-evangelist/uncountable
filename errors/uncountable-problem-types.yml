@@ -1,0 +1,65 @@
+generated: '2026-09-01'
+method: probed
+source: >-
+  live anonymous responses from https://app.uncountable.com/mcp and
+  https://app.uncountable.com/api/... plus
+  https://www.support.uncountable.com/knowledge-base/api-access-and-permissions-in-uncountable/
+format: none
+rfc9457: false
+note: >-
+  Uncountable publishes no error reference on any public page, and there is no OpenAPI to
+  derive 4xx/5xx responses from. This catalog is therefore short and honest: it records only
+  failure modes that were either observed on a live anonymous request or stated in the public
+  knowledgebase. The full error reference is behind the application sign-in at
+  https://app.uncountable.com/docs. No error envelope schema is published, and the two
+  observed error bodies are plain text rather than application/problem+json.
+envelope:
+  content_type_observed: text/plain
+  schema: unpublished
+problem_type_count: 3
+problem_types:
+- status: 401
+  title: unauthorized
+  method: probed
+  detail: >-
+    Returned for any unauthenticated request to the MCP endpoint. Body is the literal string
+    "unauthorized"; the actionable signal is in the header rather than the body.
+  headers:
+    WWW-Authenticate: 'Bearer error="invalid_token", scope="EXTERNAL_API_READ EXTERNAL_API_WRITE"'
+  remediation: >-
+    Obtain a bearer token through the OAuth 2.0 authorization code + PKCE flow at
+    https://app.uncountable.com/oauth2/authorize with the EXTERNAL_API_READ and/or
+    EXTERNAL_API_WRITE scope.
+  evidence:
+    url: https://app.uncountable.com/mcp
+    http_status: 401
+    fetched: '2026-09-01'
+- status: 403
+  title: forbidden
+  method: searched
+  detail: >-
+    Returned when the authenticated caller lacks permission for the requested resource.
+    Uncountable enforces the same role-based access control on the API as in the UI, at
+    project, experiment and dataset level, and filters responses server-side; a 403 means the
+    caller is authenticated but not entitled, not that the resource is absent.
+  remediation: >-
+    Have an administrator grant the user or robot user access to the project, experiment or
+    dataset. All access attempts are logged for audit.
+  evidence:
+    url: https://www.support.uncountable.com/knowledge-base/api-access-and-permissions-in-uncountable/
+    http_status: 200
+- status: 302
+  title: unauthenticated redirect to sign-in
+  method: probed
+  detail: >-
+    A trap for integrators and for agents. Unauthenticated requests to most application paths
+    — including /docs, /api/openapi.json and several /.well-known/* paths — do not return 401.
+    They return 302 to /signin with an HTML body, so a client that only checks for a 2xx/4xx
+    split will read a redirect-to-login as a soft success and parse the sign-in page as data.
+    The /mcp route is the exception and correctly returns 401.
+  remediation: Treat any 302 to /signin as an authentication failure and follow the OAuth flow.
+  evidence:
+    url: https://app.uncountable.com/docs
+    http_status: 302
+    redirect_to: https://app.uncountable.com/signin
+    fetched: '2026-09-01'

@@ -1,0 +1,71 @@
+generated: '2026-09-01'
+method: searched
+source: https://www.support.uncountable.com/knowledge-base/bodie-ai-skills/
+note: >-
+  Uncountable publishes its own agent-skill system. "Bodie" is the platform's AI assistant, and
+  a Skill is a saved instruction or workflow — Markdown content plus a name, a lowercase-hyphen
+  reference, a description that acts as the invocation trigger, and a "Loaded by Default"
+  toggle — that Bodie loads and follows. The shape is closely analogous to a packaged Agent
+  Skill: prose operating instructions that steer an assistant's use of underlying tools, rather
+  than a direct tool binding.
+  IMPORTANT SCOPE NOTE: these skills run INSIDE the Uncountable platform against Bodie's
+  internal tools (the plotting skill, for example, instructs Bodie to call `create_plot` and
+  `edit_explore_viz`). They are not distributed as files, are not fetchable, and are not
+  invocable through the External API or the MCP server. The thirteen below are the worked
+  examples Uncountable names in its public documentation; their Markdown bodies are not
+  published, so only names and stated purposes are recorded — nothing has been reconstructed.
+provider_published:
+  system: Bodie AI Skills
+  distributed_as: in-platform records, not files
+  invocation: named directly in a prompt, or auto-loaded when marked "Loaded by Default"
+  management_path: Bodie side panel -> ... -> Skills
+  authoring_fields:
+  - name
+  - reference
+  - description
+  - content
+  - loaded_by_default
+  skill_count: 13
+  skills:
+  - name: Writing and Evaluating Value Spec
+    purpose: drafts and troubleshoots value specs with evaluation context
+  - name: Editing Recipes
+    purpose: edits existing recipes via tools covering inputs, steps and workflow steps
+  - name: Plotting Workflow
+    purpose: creates and edits plots and visualizations in Explore Data
+    named_tools:
+    - create_plot
+    - edit_explore_viz
+  - name: Finding and Reading Files
+    purpose: discovers, reads, summarizes and compares files
+  - name: Suggest Formulations Workflow
+    purpose: generates optimized recipe suggestions via design of experiments
+  - name: Background Research
+    purpose: mines documents and experiments for formulation starting points
+  - name: Suggest Graphs Workflow
+    purpose: produces three to five chart suggestions for Explore Data
+  - name: Upsert Entities Guide
+    purpose: domain knowledge for creating and updating entity configurations
+  - name: Label Editing
+    purpose: guidelines for editing label templates and specs
+  - name: DOE Constraints
+    purpose: finds and edits constraints in design-of-experiments contexts
+  - name: Creating Recipes
+    purpose: creates recipes via helpbot tools from scratch
+  - name: Creating Entities
+    purpose: creates entities through helpbot tools
+authored:
+  note: >-
+    One packaged skill is authored here, and only one, because Uncountable publishes exactly one
+    External API operation. Skills for the write surface are deliberately not written: the
+    operations exist (an EXTERNAL_API_WRITE scope is declared by the live authorization server)
+    but their names, parameters and reversal semantics are behind the application sign-in, and a
+    skill grounded in guessed operation names would teach an agent to call an API that may not
+    exist in that shape.
+  skills:
+  - file: uncountable-list-entities.md
+    name: uncountable-list-entities
+    api: uncountable-external-api
+    operations:
+    - external_list_entities
+    grounded_in: https://www.support.uncountable.com/knowledge-base/external-api-list_entities/

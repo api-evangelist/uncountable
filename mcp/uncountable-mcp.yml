@@ -1,0 +1,89 @@
+generated: '2026-09-01'
+method: probed
+source: https://www.support.uncountable.com/knowledge-base/uncountable-mcp-setup-guide/
+name: Uncountable MCP Server
+status: live
+vendor: Uncountable
+official: true
+description: >-
+  A first-party, hosted Model Context Protocol server exposed at the /mcp path of every
+  Uncountable environment. It is a remote endpoint an MCP client POSTs to directly —
+  there is no npx/pip package and no local process. Access is OAuth 2.0 protected and
+  scoped to what the authenticating user can already see in that schema, so the server
+  inherits the platform's role-based access control rather than widening it.
+deployment:
+  mode: remote
+  endpoint: https://app.uncountable.com/mcp
+  install: null
+  package: null
+  auth: oauth
+  verified: probed
+endpoints:
+- region: us
+  url: https://app.uncountable.com/mcp
+  probed:
+    method: POST
+    body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    http_status: 401
+    www_authenticate: 'Bearer error="invalid_token", scope="EXTERNAL_API_READ EXTERNAL_API_WRITE"'
+    server_header: uvicorn
+    fetched: '2026-09-01'
+- region: eu
+  url: https://appeu.uncountable.com/mcp
+  probed:
+    method: GET
+    http_status: 401
+    www_authenticate: 'Bearer error="invalid_token", scope="EXTERNAL_API_READ EXTERNAL_API_WRITE"'
+    server_header: uvicorn
+    fetched: '2026-09-01'
+- region: tenant
+  url: https://<your-uncountable-environment>/mcp
+  note: >-
+    The setup guide states the endpoint is the customer's own environment URL with /mcp
+    appended, so single-tenant deployments carry their own host.
+authorization:
+  type: oauth2
+  flow: authorization_code
+  pkce: S256
+  authorization_endpoint: https://app.uncountable.com/oauth2/authorize
+  token_endpoint: https://app.uncountable.com/oauth2/token
+  scopes:
+  - EXTERNAL_API_READ
+  - EXTERNAL_API_WRITE
+  dynamic_client_registration: false
+  client_id_metadata_document_supported: true
+  client_registration: >-
+    OAuth clients are created by an administrator in Uncountable under
+    User Administration -> OAuth, and are scoped to a single schema/account.
+  documented_redirect_uris:
+  - client: Claude.ai
+    uris:
+    - https://claude.ai/api/mcp/auth_callback
+    - https://claude.com/api/mcp/auth_callback
+  - client: ChatGPT
+    uris: []
+    note: the platform generates a custom callback URL during app creation
+  - client: Copilot Studio
+    uris: []
+    note: a custom redirect URI is generated per connection
+  cimd:
+    supported: true
+    documented_client_id: https://claude.ai/oauth/mcp-oauth-client-metadata
+    note: >-
+      The discovery document advertises client_id_metadata_document_supported: true, and
+      the setup guide documents CIMD as the alternative to creating an OAuth client, for
+      Claude only.
+documented_clients:
+- Claude.ai
+- ChatGPT
+- Microsoft Copilot Studio
+tools:
+  status: gated
+  count: null
+  note: >-
+    tools/list requires a bearer token; the anonymous probe returns 401 with an
+    invalid_token challenge. Uncountable does not publish the tool list on any public
+    page, so no tool names or inputSchemas are recorded here. Recovering them requires
+    authenticated introspection against a customer schema. The MCP setup guide's only
+    worked example is the prompt "Fetch me some projects using the Uncountable MCP",
+    which implies read tools over platform entities but names no tool.

@@ -1,0 +1,116 @@
+generated: '2026-09-01'
+method: derived
+source: >-
+  derived from the public Uncountable knowledgebase importer and platform-structure articles at
+  https://www.support.uncountable.com/knowledge-base/ — each entity below is backed by a
+  published article; no OpenAPI exists to derive $ref links from
+note: >-
+  There is no public OpenAPI for Uncountable, so this is not a schema-derived entity graph. It is
+  the entity vocabulary the platform documents to its own users, read off the importer articles
+  (one importer per entity type) and the platform-structure articles. Field-level schemas, id
+  formats and id prefixes are NOT published and are therefore absent here rather than guessed.
+  The relationships recorded are only those stated in the article titles and bodies — for
+  example "Importing Outputs with Condition Parameters on Lots" states that outputs carry
+  condition parameters on lots. Anything a reader might reasonably expect (a Recipe belongs to a
+  Project, say) but that no article states, is left out.
+  This is useful chiefly as an integration vocabulary: it tells you which `entityType` values the
+  External API's list_entities call is likely to accept, since the API is entity-typed.
+entity_count: 15
+entities:
+- name: Project
+  description: Top-level organizing container for R&D work.
+  source: https://www.support.uncountable.com/knowledge-base/importing-projects/
+- name: Child Project
+  description: Sub-project with its own permissions inherited from and refined against the parent.
+  source: https://www.support.uncountable.com/knowledge-base/child-project-permissions/
+- name: Experiment
+  description: A unit of experimental work; the subject of workflows and of API-level permissions.
+  source: https://www.support.uncountable.com/knowledge-base/experiment-workflows/
+- name: Recipe
+  description: A formulation, composed of inputs and mix-order steps.
+  source: https://www.support.uncountable.com/knowledge-base/recipe_details/
+- name: Recipe Metadata
+  description: Structured metadata attached to a recipe.
+  source: https://www.support.uncountable.com/knowledge-base/importing-recipe-metadata/
+- name: Ingredient
+  description: A material used as a recipe input.
+  source: https://www.support.uncountable.com/knowledge-base/importing-ingredients/
+- name: Ingredient Field Value
+  description: Values populating custom fields defined on an ingredient.
+  source: https://www.support.uncountable.com/knowledge-base/importing-ingredient-field-values/
+- name: Material Family
+  description: Grouping of materials; part of the platform's structural hierarchy alongside projects.
+  source: https://www.support.uncountable.com/knowledge-base/platform-structure-material-families-and-projects/
+- name: Output
+  description: A measured result of an experiment.
+  source: https://www.support.uncountable.com/knowledge-base/importing-outputs/
+- name: Output Group
+  description: Grouping of related outputs.
+  source: https://www.support.uncountable.com/knowledge-base/importing-output-groups/
+- name: Condition Parameter
+  description: Parameter describing the conditions under which a measurement was taken.
+  source: https://www.support.uncountable.com/knowledge-base/importing-condition-parameters/
+- name: Lot
+  description: A specific produced batch; outputs and condition parameters attach to lots.
+  source: https://www.support.uncountable.com/knowledge-base/importing-outputs-with-condition-parameters-on-lots/
+- name: Inventory
+  description: Stock of materials held, tracked against locations.
+  source: https://www.support.uncountable.com/knowledge-base/importing-inventory/
+- name: Inventory Location
+  description: Physical location where inventory is held.
+  source: https://www.support.uncountable.com/knowledge-base/importing-inventory-locations/
+- name: Equipment
+  description: Laboratory equipment, which may be nested as parent and sub-equipment.
+  source: https://www.support.uncountable.com/knowledge-base/importing-equipment/
+- name: Analytical Method
+  description: A defined measurement method producing outputs.
+  source: https://www.support.uncountable.com/knowledge-base/importing-analytical-methods/
+- name: User
+  description: Platform user; also the subject of robot (service) accounts used for API access.
+  source: https://www.support.uncountable.com/knowledge-base/importing-users/
+- name: Listing Configuration
+  description: >-
+    Saved query definition — base dataset, columns and filters — created in the UI. This is the
+    entity the External API is addressed through: list_entities takes a configReference rather
+    than query parameters.
+  source: https://www.support.uncountable.com/knowledge-base/listing-configuration/
+relationships:
+- from: Child Project
+  to: Project
+  type: belongs_to
+  via: parent project
+  evidence: https://www.support.uncountable.com/knowledge-base/child-project-permissions/
+- from: Equipment
+  to: Equipment
+  type: belongs_to
+  via: parent equipment / sub-equipment association
+  evidence: https://www.support.uncountable.com/knowledge-base/associating-parent-equipment-with-sub-equipment/
+- from: Output
+  to: Lot
+  type: belongs_to
+  via: condition parameters recorded on lots
+  evidence: https://www.support.uncountable.com/knowledge-base/importing-outputs-with-condition-parameters-on-lots/
+- from: Output
+  to: Output Group
+  type: belongs_to
+  via: output group
+  evidence: https://www.support.uncountable.com/knowledge-base/importing-output-groups/
+- from: Ingredient Field Value
+  to: Ingredient
+  type: belongs_to
+  via: ingredient
+  evidence: https://www.support.uncountable.com/knowledge-base/importing-ingredient-field-values/
+- from: Inventory
+  to: Inventory Location
+  type: belongs_to
+  via: location
+  evidence: https://www.support.uncountable.com/knowledge-base/importing-inventory-locations/
+- from: Listing Configuration
+  to: entityType
+  type: has_one
+  via: base dataset entity type
+  evidence: https://www.support.uncountable.com/knowledge-base/external-api-list_entities/
+id_scheme:
+  published: false
+  prefixes: []
+  note: no id format or prefix convention is published on any public page
