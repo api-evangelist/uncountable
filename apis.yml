@@ -8,6 +8,22 @@ description: 'Uncountable is a unified laboratory informatics and R&D data platf
   SaaS application (US and EU deployments) and exposes an authenticated External API
   plus a hosted, OAuth-protected Model Context Protocol (MCP) server so agents and
   integration tooling can read platform data, alongside SFTP and instrument/ERP connectors.'
+accessModel:
+  pricing: unknown
+  onboarding: approval
+  trial: false
+  try_now: false
+  public: false
+  label: Requires approval
+  confidence: medium
+  source:
+  - plans
+  - authentication
+  - scopes
+  - rate-limits
+  - security
+  generated: '2026-09-03'
+  method: derived
 image: https://cdn.prod.website-files.com/5dd1e506c5a7edfbd95f37e2/64138d793d519dafccc6295f_opengraph.png
 url: https://raw.githubusercontent.com/api-evangelist/uncountable/refs/heads/main/apis.yml
 x-type: company
