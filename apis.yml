@@ -37,6 +37,18 @@ tags:
 - LIMS
 - Electronic Lab Notebook
 - R&D Data Management
+- PLM
+- Quality Management
+- Materials Science
+- Chemicals
+- Artificial Intelligence
+- MCP
+tags_raw:
+- Company
+- Laboratory Informatics
+- LIMS
+- Electronic Lab Notebook
+- R&D Data Management
 - Product Lifecycle Management
 - Quality Management
 - Materials Science
@@ -86,6 +98,9 @@ apis:
   humanURL: https://www.support.uncountable.com/knowledge-base/uncountable-mcp-setup-guide/
   baseURL: https://app.uncountable.com/mcp
   tags:
+  - MCP
+  - Agents
+  tags_raw:
   - Model Context Protocol
   - Agents
   properties:
