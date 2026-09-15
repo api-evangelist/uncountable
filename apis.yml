@@ -1,13 +1,12 @@
 aid: uncountable
 name: Uncountable
-description: 'Uncountable is a unified laboratory informatics and R&D data platform for
-  enterprise research organizations, replacing disconnected LIMS, ELN, QMS and PLM tools
-  with a single cloud system that centralizes experimental data, accelerates formulation
-  work, and supports AI-driven discovery across chemicals, advanced materials, batteries,
-  plastics, coatings, food and life sciences. The platform is delivered as a multi-region
-  SaaS application (US and EU deployments) and exposes an authenticated External API
-  plus a hosted, OAuth-protected Model Context Protocol (MCP) server so agents and
-  integration tooling can read platform data, alongside SFTP and instrument/ERP connectors.'
+description: Uncountable is a unified laboratory informatics and R&D data platform for enterprise research
+  organizations, replacing disconnected LIMS, ELN, QMS and PLM tools with a single cloud system that centralizes
+  experimental data, accelerates formulation work, and supports AI-driven discovery across chemicals,
+  advanced materials, batteries, plastics, coatings, food and life sciences. The platform is delivered
+  as a multi-region SaaS application (US and EU deployments) and exposes an authenticated External API
+  plus a hosted, OAuth-protected Model Context Protocol (MCP) server so agents and integration tooling
+  can read platform data, alongside SFTP and instrument/ERP connectors.
 accessModel:
   pricing: unknown
   onboarding: approval
@@ -61,16 +60,14 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 apis:
-- aid: uncountable-external-api
+- aid: uncountable:uncountable-external-api
   name: Uncountable External API
-  description: 'The Uncountable External API is the authenticated REST surface of the
-    Uncountable R&D platform. Its documented entry point is the list_entities endpoint,
-    which returns rows from a Listing Configuration defined in the Uncountable UI rather
-    than querying entities directly. It is protected by OAuth 2.0 (authorization code
-    with PKCE) using the EXTERNAL_API_READ and EXTERNAL_API_WRITE scopes, or by basic
-    authentication for legacy use, and enforces the same role-based permissions as the
-    web application. Full endpoint and parameter reference is published behind the
-    application sign-in at /docs.'
+  description: The Uncountable External API is the authenticated REST surface of the Uncountable R&D platform.
+    Its documented entry point is the list_entities endpoint, which returns rows from a Listing Configuration
+    defined in the Uncountable UI rather than querying entities directly. It is protected by OAuth 2.0
+    (authorization code with PKCE) using the EXTERNAL_API_READ and EXTERNAL_API_WRITE scopes, or by basic
+    authentication for legacy use, and enforces the same role-based permissions as the web application.
+    Full endpoint and parameter reference is published behind the application sign-in at /docs.
   humanURL: https://app.uncountable.com/docs
   baseURL: https://app.uncountable.com/api/external
   tags:
@@ -86,15 +83,14 @@ apis:
     url: conventions/uncountable-conventions.yml
   - type: ErrorCatalog
     url: errors/uncountable-problem-types.yml
-- aid: uncountable-mcp
+- aid: uncountable:uncountable-mcp
   name: Uncountable MCP Server
-  description: 'Uncountable ships a first-party hosted Model Context Protocol server at
-    the /mcp path of each customer environment (https://app.uncountable.com/mcp for the
-    US deployment, https://appeu.uncountable.com/mcp for the EU deployment). It is a
-    remote MCP endpoint — no local install — protected by OAuth 2.0 with the
-    EXTERNAL_API_READ and EXTERNAL_API_WRITE scopes, and documented for Claude.ai,
-    ChatGPT and Microsoft Copilot Studio. Access through the server is limited to what
-    the authenticating user can already see in that schema.'
+  description: Uncountable ships a first-party hosted Model Context Protocol server at the /mcp path of
+    each customer environment (https://app.uncountable.com/mcp for the US deployment, https://appeu.uncountable.com/mcp
+    for the EU deployment). It is a remote MCP endpoint — no local install — protected by OAuth 2.0 with
+    the EXTERNAL_API_READ and EXTERNAL_API_WRITE scopes, and documented for Claude.ai, ChatGPT and Microsoft
+    Copilot Studio. Access through the server is limited to what the authenticating user can already see
+    in that schema.
   humanURL: https://www.support.uncountable.com/knowledge-base/uncountable-mcp-setup-guide/
   baseURL: https://app.uncountable.com/mcp
   tags:
