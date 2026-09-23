@@ -1,0 +1,1 @@
+{"resource":"https://app.uncountable.com/mcp","authorization_servers":["https://app.uncountable.com"],"scopes_supported":["EXTERNAL_API_READ","EXTERNAL_API_WRITE"],"bearer_methods_supported":["header"]}

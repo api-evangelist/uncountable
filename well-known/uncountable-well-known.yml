@@ -1,12 +1,16 @@
-generated: '2026-09-01'
+generated: '2026-09-19'
 method: probed
 source: live GET of the RFC 8615 well-known path list on every Uncountable host
-note: >-
-  Two of the five standard paths return real documents, and only on the application
-  hosts. The marketing host (www.uncountable.com) 404s every path; the WordPress
-  knowledgebase host 301s them. app.uncountable.com and appeu.uncountable.com — the
-  US and EU deployments of the platform — both serve a genuine OAuth 2.0 /
-  OpenID Connect discovery document declaring the External API scopes.
+note: 'Two of the five standard paths return real documents, and only on the application hosts. The marketing
+  host (www.uncountable.com) 404s every path; the WordPress knowledgebase host 301s them. app.uncountable.com
+  and appeu.uncountable.com — the US and EU deployments of the platform — both serve a genuine OAuth 2.0
+  / OpenID Connect discovery document declaring the External API scopes.
+
+
+  MCP-host OAuth discovery added 2026-09-19 (roadmap#321/#337): the harvest visits a provider''s primary
+  hosts, and RFC 9728 protected-resource metadata lives on the MCP host, so these documents existed and
+  were invisible to the scorer. Fetched live and validated on `resource`/`issuer`; one negative control
+  per host.'
 hosts:
 - host: app.uncountable.com
   documents:
@@ -40,6 +44,11 @@ hosts:
   - path: /.well-known/agent.json
     status: 302
     file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: uncountable-app-oauth-protected-resource.json
+    bytes: 202
+  path_echo_control: passed
 - host: appeu.uncountable.com
   documents:
   - path: /.well-known/openid-configuration
@@ -91,3 +100,15 @@ hosts:
   - path: /.well-known/agent-card.json
     status: 301
     file: null
+x-mcp-probe:
+  probed: '2026-09-19'
+  issue: roadmap#321, roadmap#337
+  documents:
+  - host: https://app.uncountable.com
+    path: /.well-known/oauth-protected-resource
+    file: uncountable-app-oauth-protected-resource.json
+  - host: https://app.uncountable.com
+    path: /.well-known/oauth-authorization-server
+    file: uncountable-app-oauth-authorization-server.json
+  validated_on: resource (RFC 9728) / issuer (RFC 8414, OIDC)
+  negative_control: one per host; a 2xx JSON object at an impossible path discards the host
