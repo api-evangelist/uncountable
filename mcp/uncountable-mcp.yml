@@ -85,3 +85,19 @@ tools:
     recorded here. Recovering them requires authenticated introspection against a customer schema. The
     MCP setup guide's only worked example is the prompt "Fetch me some projects using the Uncountable
     MCP", which implies read tools over platform entities but names no tool.
+rfc9728:
+  endpoint: https://app.uncountable.com/mcp
+  metadata_url: https://app.uncountable.com/.well-known/oauth-protected-resource/mcp
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://app.uncountable.com/mcp
+    authorization_servers:
+    - https://app.uncountable.com
+    scopes_supported:
+    - EXTERNAL_API_READ
+    - EXTERNAL_API_WRITE
+    bearer_methods_supported:
+    - header
